@@ -1,26 +1,49 @@
+from datetime import date
+
+
 class Human:
-    def __init__(self, **kwargs):
-        self.__name = kwargs.get('name')
-        self.__age = kwargs.get('age')
-        self.__height = kwargs.get('height')
+    count = 0
 
-    def get_name(self):
-        return self.__name
-
-    def set_name(self, name):
-        self.__name = name
+    def __init__(self, *args):
+        name, year, height = args
+        self.name = name
+        self.year = year
+        self.height = height
+        Human.count += 1
 
     def update_info(self, **kwargs):
-        self.__name = kwargs.get('name') if kwargs.get('name') else self.__name
-        self.__age = kwargs.get('age') if kwargs.get('age') else self.__age
-        self.__height = kwargs.get('height') if kwargs.get('height') else self.__height
+        self.name = kwargs.get('name') if kwargs.get('name') else self.name
+        self.year = kwargs.get('age') if kwargs.get('age') else self.year
+        self.height = kwargs.get('height') if kwargs.get('height') else self.height
+
+    @classmethod
+    def from_birth_year(cls, age):
+        if cls.is_adult(age):
+            human = cls(age=date.today().year - age)
+            return human
+        else:
+            return
+
+    @staticmethod
+    def f_to_c(year):
+        Human.count += 1
+        if year < 5:
+            print('You just a child')
+            return False
+        else:
+            return True
 
     def __repr__(self):
-        return f"Name: {self.__name}, age: {self.__age}, height: {self.__height}"
+        return f"Name: {self.name}, year: {self.year}, height: {self.height}"
+
+    def __add__(self, *args):
+        res = 0
+        for item in args:
+            res += item.age
+        return res
 
 
-human = Human(age=15, name='Mike', height=135)
-d = {"age": 15, "name": 'Mike'}
-print(human)
-human.update_info(name="Lisa")
-print(human)
+human = Human(15, 'Mike', 135)
+print(f'{human.height=}')
+print(f'{human.year=}')
+print(f'{human.name=}')
